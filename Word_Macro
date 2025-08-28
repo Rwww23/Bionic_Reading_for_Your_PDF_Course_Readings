@@ -1,0 +1,21 @@
+Sub BoldFirstHalfOfWordsOnly()
+    Dim doc As Document
+    Dim wrd As Range
+    Dim wordText As String
+    Dim halfLen As Long
+    
+    Set doc = ActiveDocument
+    
+    For Each wrd In doc.Words
+        wordText = Trim(wrd.Text)
+        
+        ' 仅处理纯字母单词，跳过标点/数字/空格
+        If wordText Like "[A-Za-z]*" And Len(wordText) > 1 Then
+            halfLen = Len(wordText) \ 2
+            
+            ' 把范围缩小到前半部分并加粗
+            wrd.SetRange wrd.Start, wrd.Start + halfLen
+            wrd.Bold = True
+        End If
+    Next wrd
+End Sub
